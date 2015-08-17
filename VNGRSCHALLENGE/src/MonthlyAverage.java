@@ -7,6 +7,7 @@
  */
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
@@ -25,22 +26,21 @@ import scala.Tuple2;
 
 public class MonthlyAverage {
 
-	public static void main(String[] args) throws FileNotFoundException,
-			UnsupportedEncodingException {
+	public static void main(String[] args) throws IOException, ParseException {
 		SparkConf sparkConf = new SparkConf().setAppName("MonthlyAverage");
 		JavaSparkContext ctx = new JavaSparkContext(sparkConf);
+		ReadConfigFile config = new ReadConfigFile();
 		
-		/*
-		String url = "https://convertale.com/challenge/v1/weather/all.html";
-		String date1 = "2012-12";
-		String date2 = "2014-06";
+		String url = config.getProperty("url");
+		String date1 = config.getProperty("date1");
+		String date2 = config.getProperty("date2");
 
 		List<WeatherInfo> weathersList = HtmlParser.parseHtmlToWeatherInfo(url,
 				date1, date2);
+		
 		WeatherCSVWriter writer = new WeatherCSVWriter();
 		writer.writeCsv(weathersList, "weather.csv");
-		*/
-
+		
 		String path = "weather.csv";
 
 		JavaPairRDD<String, List<Double>> weatherPair = readCsv(ctx, path);
@@ -51,15 +51,15 @@ public class MonthlyAverage {
 		JavaPairRDD<String, List<Double>> averageWeatherWeather = averageList(
 				sumWeather, keyCount);
 
-		PrintWriter writer = new PrintWriter("train_results/result.txt",
+		PrintWriter writer2 = new PrintWriter("train_results/result.txt",
 				"UTF-8");
 		for (Tuple2<?, ?> tuple : averageWeatherWeather.collect()) {
 			System.out.println("averageWeatherWeather " + tuple._1() + ": "
 					+ tuple._2());
-			writer.println(tuple._1() + ":" + tuple._2());
+			writer2.println(tuple._1() + ":" + tuple._2());
 		}
 
-		writer.close();
+		writer2.close();
 	}
 
 	/*

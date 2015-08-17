@@ -12,9 +12,9 @@ public class TimeCompare {
 
 	public TimeCompare(String referenceDate, String dataDate1, String dataDate2)
 			throws ParseException {
-		this.d1 = new SimpleDateFormat("yyyy-MM-dd").parse(dataDate1);
-		this.d2 = new SimpleDateFormat("yyyy-MM-dd").parse(dataDate2);
-		this.d3 = new SimpleDateFormat("yyyy-MM-dd").parse(referenceDate);
+		this.d1 = new SimpleDateFormat("yyyy-MM").parse(dataDate1);
+		this.d2 = new SimpleDateFormat("yyyy-MM").parse(dataDate2);
+		this.d3 = new SimpleDateFormat("yyyy-MM").parse(referenceDate);
 	}
 
 	public boolean isDateInInterval() {
