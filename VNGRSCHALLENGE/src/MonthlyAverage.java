@@ -31,16 +31,21 @@ public class MonthlyAverage {
 		JavaSparkContext ctx = new JavaSparkContext(sparkConf);
 		ReadConfigFile config = new ReadConfigFile();
 		
+		// html section
 		String url = config.getProperty("url");
+		System.out.println(url);
 		String date1 = config.getProperty("date1");
+		System.out.println(date1);
 		String date2 = config.getProperty("date2");
-
+		System.out.println(date2);
+		System.out.println("Veri kaynağı ve parametreler configurasyon dosyasından okundu.");
 		List<WeatherInfo> weathersList = HtmlParser.parseHtmlToWeatherInfo(url,
 				date1, date2);
 		
 		WeatherCSVWriter writer = new WeatherCSVWriter();
 		writer.writeCsv(weathersList, "weather.csv");
 		
+		// spark section
 		String path = "weather.csv";
 
 		JavaPairRDD<String, List<Double>> weatherPair = readCsv(ctx, path);

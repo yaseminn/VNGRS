@@ -22,10 +22,13 @@ public class HtmlParser {
 
 		List<String> urls = getUrls(urlPath);
 		TimeCompare timeComparer = null;
+		String value = null;
+		String resultDate = null;
+		
 		Iterator<String> iter = urls.iterator();
 		while (iter.hasNext()) {
-			String value = iter.next();
-			String resultDate = DateMatcher(value);
+			value = iter.next();
+			resultDate = DateMatcher(value);
 			timeComparer = new TimeCompare(resultDate, date1, date2);
 
 			if (!(timeComparer.isDateInInterval())) {
@@ -37,10 +40,13 @@ public class HtmlParser {
 		List<WeatherInfo> weathersList = new ArrayList<>();
 
 		for (String url : urlList) {
+			System.out.println("--------- " + url);
+			
 			weathersList.add(new WeatherInfo(DateMatcher(url),
 					getAttributes(getUrlsContent(url), "min"), getAttributes(
 							getUrlsContent(url), "max"), getAttributes(
 							getUrlsContent(url), "mean")));
+			
 		}
 
 		for (WeatherInfo weather : weathersList) {
@@ -68,7 +74,8 @@ public class HtmlParser {
 				.substring(begin + "<body>".length(), finish).trim()
 				.split("\n");
 
-		return new ArrayList(Arrays.asList(splittedBody));
+		System.out.println("Url listesi alındı");
+		return new ArrayList<String>(Arrays.asList(splittedBody));
 	}
 
 	/*
@@ -88,18 +95,22 @@ public class HtmlParser {
 		encoding = encoding == null ? "UTF-8" : encoding;
 		String body = IOUtils.toString(in, encoding);
 
+		if(!body.equalsIgnoreCase(null)){
+			System.out.println("Url içeriği alındı.");
+		}
+		
 		return body;
 	}
 
 	/*
 	 * Searching dates formats from given string
 	 */
-	public static String DateMatcher(String date) {
+	public static String DateMatcher(String url) {
 
 		Pattern datePattern = Pattern.compile("(\\d{4})-(\\d{2})-(\\d{2})");
 
 		String sResult = null;
-		Matcher dateMatcher = datePattern.matcher(date);
+		Matcher dateMatcher = datePattern.matcher(url);
 		if (dateMatcher.find()) {
 
 			sResult = dateMatcher.group(1) + "-" + dateMatcher.group(2) + "-"
@@ -124,20 +135,20 @@ public class HtmlParser {
 			if (m.find()) {
 				result.add((url.substring(m.start(0), m.end(0))));
 			}
+			System.out.println(url);
 		}
 
 		return result;
 	}
 
 	public static String getAttributes(String htmlContent, String searchText) {
-		return htmlContent.split("<b>" + searchText + "</b>")[1]
+		String result  = htmlContent.split("<b>" + searchText + "</b>")[1]
 				.split("<span>")[1].replaceAll("\\D+", "");
+		
+		System.out.println(htmlContent +" - " +searchText +":" +result  );
+		
+		return result;
 
-	}
-
-	public static int convertDateToInt(String date) {
-		String[] dateSplited = date.split("-");
-		return Integer.parseInt(dateSplited[0] + dateSplited[1]);
 	}
 
 }
