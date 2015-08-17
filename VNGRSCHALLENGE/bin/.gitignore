@@ -1,10 +1,4 @@
-/HtmlParser.class
-/MonthlyAverage$1.class
-/MonthlyAverage$2.class
-/MonthlyAverage$3.class
-/MonthlyAverage.class
-/WeatherCSVWriter.class
-/WeatherInfo.class
-/TimeCompare.class
-/ReadConfigFile.class
-/Test/
+/Test.class
+/TimeCompareTest.class
+/HtmlParserTest.class
+/ht.class

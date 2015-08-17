@@ -28,7 +28,7 @@ public class HtmlParser {
 		Iterator<String> iter = urls.iterator();
 		while (iter.hasNext()) {
 			value = iter.next();
-			resultDate = DateMatcher(value);
+			resultDate = dateMatcher(value);
 			timeComparer = new TimeCompare(resultDate, date1, date2);
 
 			if (!(timeComparer.isDateInInterval())) {
@@ -42,7 +42,7 @@ public class HtmlParser {
 		for (String url : urlList) {
 			System.out.println("--------- " + url);
 			
-			weathersList.add(new WeatherInfo(DateMatcher(url),
+			weathersList.add(new WeatherInfo(dateMatcher(url),
 					getAttributes(getUrlsContent(url), "min"), getAttributes(
 							getUrlsContent(url), "max"), getAttributes(
 							getUrlsContent(url), "mean")));
@@ -105,7 +105,7 @@ public class HtmlParser {
 	/*
 	 * Searching dates formats from given string
 	 */
-	public static String DateMatcher(String url) {
+	public static String dateMatcher(String url) {
 
 		Pattern datePattern = Pattern.compile("(\\d{4})-(\\d{2})-(\\d{2})");
 
