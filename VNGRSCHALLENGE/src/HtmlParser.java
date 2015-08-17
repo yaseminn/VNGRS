@@ -21,9 +21,9 @@ public class HtmlParser {
 			String date1, String date2) throws IOException, ParseException {
 
 		List<String> urls = getUrls(urlPath);
-		TimeCompare timeComparer = null;
-		String value = null;
-		String resultDate = null;
+		TimeCompare timeComparer;
+		String value ;
+		String resultDate;
 		
 		Iterator<String> iter = urls.iterator();
 		while (iter.hasNext()) {

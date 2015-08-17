@@ -11,7 +11,7 @@ public class TimeCompareTest {
 	public void timeCompareTest() throws ParseException {
 		TimeCompare time = new TimeCompare("2013-04-02", "2013-03-12", "2014-09-20");
 		boolean result = time.isDateInInterval();
-	    Assert.assertEquals(true, result);
+	    Assert.assertTrue(result);
 	}
 
 }
