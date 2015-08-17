@@ -1,8 +1,8 @@
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -18,16 +18,17 @@ public class HtmlParser {
 	 * Taking datas given date intervals and saving to WeatherInfo object type.
 	 */
 	public static List<WeatherInfo> parseHtmlToWeatherInfo(String urlPath,
-			String date1, String date2) throws IOException {
+			String date1, String date2) throws IOException, ParseException {
 
 		List<String> urls = getUrls(urlPath);
-
+		TimeCompare timeComparer = null;
 		Iterator<String> iter = urls.iterator();
 		while (iter.hasNext()) {
 			String value = iter.next();
-			int resultDate = Integer.parseInt(DateMatcher(value, true));
+			String resultDate = DateMatcher(value);
+			timeComparer = new TimeCompare(resultDate, date1, date2);
 
-			if (!(resultDate >= convertDateToInt(date1) && resultDate <= convertDateToInt(date2))) {
+			if (!(timeComparer.isDateInInterval())) {
 				iter.remove();
 			}
 		}
@@ -36,7 +37,7 @@ public class HtmlParser {
 		List<WeatherInfo> weathersList = new ArrayList<>();
 
 		for (String url : urlList) {
-			weathersList.add(new WeatherInfo(DateMatcher(url, false),
+			weathersList.add(new WeatherInfo(DateMatcher(url),
 					getAttributes(getUrlsContent(url), "min"), getAttributes(
 							getUrlsContent(url), "max"), getAttributes(
 							getUrlsContent(url), "mean")));
@@ -93,7 +94,7 @@ public class HtmlParser {
 	/*
 	 * Searching dates formats from given string
 	 */
-	public static String DateMatcher(String date, boolean isNumber) {
+	public static String DateMatcher(String date) {
 
 		Pattern datePattern = Pattern.compile("(\\d{4})-(\\d{2})-(\\d{2})");
 
@@ -101,12 +102,8 @@ public class HtmlParser {
 		Matcher dateMatcher = datePattern.matcher(date);
 		if (dateMatcher.find()) {
 
-			if (isNumber) {
-				sResult = dateMatcher.group(1) + dateMatcher.group(2);
-			} else {
-				sResult = dateMatcher.group(1) + "-" + dateMatcher.group(2)
-						+ "-" + dateMatcher.group(3);
-			}
+			sResult = dateMatcher.group(1) + "-" + dateMatcher.group(2) + "-"
+					+ dateMatcher.group(3);
 		}
 
 		return sResult;
