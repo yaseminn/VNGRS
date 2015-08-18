@@ -18,14 +18,6 @@ public class TimeCompare {
 	}
 
 	public boolean isDateInInterval() {
-		boolean result;
-		
-		if ((d1.compareTo(d3) <= 0) && (d2.compareTo(d3) >= 0)) {
-			result = true;
-		} else {
-			result = false;
-		}
-
-		return result;
+		return ((d1.compareTo(d3) <= 0) && (d2.compareTo(d3) >= 0));
 	}
 }
