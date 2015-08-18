@@ -14,49 +14,7 @@ public class HtmlParserTest {
 
 	private static final String CONTENTATT = "<b>max</b> : <span>21°</span>";
 	private static final String URL = "https://convertale.com/challenge/v1/weather/all.html";
-	private static final String CONTENT = "<!DOCTYPE HTML> \n"
-			+ "<html>\n"
-			+ "\t<head>\n"
-			+ "\t\t<title></title>\n"
-			+ "\t\t<meta http-equiv=\"content-type\" content=\"\text/html; charset=utf-8\" />\n"
-			+ "\t</head>\n" 
-			+ "\t<body>\n" 
-			+ "\t\t<h1>DAY : 2012-12-01</h1>\n" 
-			+ "\t\t<section>\n"
-			+ "\t\t\t<div id=\"mean\">\n" 
-			+ "\t\t\t\t<b>mean</b> : <span>16°</span>\n" 
-			+ "\t\t\t</div>\n"
-			+ "\t\t\t<div id=\"max\">\n" 
-			+ "\t\t\t\t<b>max</b> : <span>18°</span>\n" 
-			+ "\t\t\t</div>\n"
-			+ "\t\t\t<div id=\"min\">\n" 
-			+ "\t\t\t\t<b>min</b> : <span>14°</span>\n"
-			+ "\t\t\t</div>\n"
-			+ "\t\t</section>\n" 
-			+ "\t</body>\n" 
-			+ "</html>";
 
-	private static final String CONTENT1 =	"<!DOCTYPE HTML>"
-	+"<html>"
-	+"<head>"
-	+"<title></title>"
-	+"<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\" />"
-	+"</head>"
-	+"<body>"
-	+"<h1>DAY : 2012-12-01</h1>"
-	+"<section>"
-	+"<div id=\"mean\">"
-	+"<b>mean</b> : <span>16°</span>"
-	+"</div>"
-	+"<div id=\"max\">"
-	+"<b>max</b> : <span>18°</span>"
-	+"</div>"
-	+"<div id=\"min\">"
-	+"<b>min</b> : <span>14°</span>"
-	+"</div>"
-	+"</section>"
-	+"</body>"
-	+"</html>";
 	@Test
 	public void getAttributesTest() {
 		String result = HtmlParser.getAttributes(CONTENTATT, "max");
@@ -88,7 +46,7 @@ public class HtmlParserTest {
 		System.out.println(result);
 		System.out.println("---");
 		System.out.println(readFile());
-		Assert.assertEquals(readFile(),result);
+		Assert.assertEquals(readFile().trim(),result.trim());
 	}
 	
 	@Test
@@ -101,13 +59,13 @@ public class HtmlParserTest {
 		Assert.assertEquals("<a href=\"http://www.convertale.com/challenge/intern/weather/2012-12-16.html\">2012-12-16.html</a>",urlList.get(15).replaceAll("\t", ""));
 	}
 	
-	/*
+	
 	@Test
 	public void parseHtmlToWeatherInfoTest() throws IOException, ParseException{
 		List<WeatherInfo> weathersList = HtmlParser.parseHtmlToWeatherInfo(URL, "2014-05", "2014-06");
 		Assert.assertEquals("2014-05-01 min: 11 max: 13 mean: 12",weathersList.get(0).toString());
 	}
-*/
+
 	
 	public String readFile() throws IOException{
 		FileInputStream inputStream = new FileInputStream("foo.txt");
