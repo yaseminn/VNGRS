@@ -21,6 +21,7 @@ public class HtmlParser {
 			String date1, String date2) throws IOException, ParseException {
 
 		List<String> urls = getUrls(urlPath);
+		System.out.println("--UrlLists is taken");
 		TimeCompare timeComparer;
 		String value ;
 		String resultDate;
@@ -35,8 +36,11 @@ public class HtmlParser {
 				iter.remove();
 			}
 		}
-
+		System.out.println("--Dates interval is obtained");
+		
 		List<String> urlList = extractUrls(urls);
+		System.out.println("--Urls are obtained");
+		
 		List<WeatherInfo> weathersList = new ArrayList<>();
 
 		for (String url : urlList) {
@@ -49,10 +53,9 @@ public class HtmlParser {
 			
 		}
 
-		for (WeatherInfo weather : weathersList) {
-			System.out.println(weather.toString());
-		}
-
+		System.out.println("--Max & Min & Mean Information  are obtained ");
+		System.out.println("--WeatherInfo Objects are generated ");
+		
 		return weathersList;
 	}
 
@@ -74,7 +77,6 @@ public class HtmlParser {
 				.substring(begin + "<body>".length(), finish).trim()
 				.split("\n");
 
-		System.out.println("Url listesi alındı");
 		return new ArrayList<String>(Arrays.asList(splittedBody));
 	}
 
@@ -95,10 +97,6 @@ public class HtmlParser {
 		encoding = encoding == null ? "UTF-8" : encoding;
 		String body = IOUtils.toString(in, encoding);
 
-		if(!body.equalsIgnoreCase(null)){
-			System.out.println("Url içeriği alındı.");
-		}
-		
 		return body;
 	}
 
@@ -135,7 +133,6 @@ public class HtmlParser {
 			if (m.find()) {
 				result.add((url.substring(m.start(0), m.end(0))));
 			}
-			System.out.println(url);
 		}
 
 		return result;

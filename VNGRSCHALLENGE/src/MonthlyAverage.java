@@ -33,12 +33,12 @@ public class MonthlyAverage {
 		
 		// html section
 		String url = config.getProperty("url");
-		System.out.println("Getting url : "+url);
+		System.out.println("--Getting url : "+url);
 		String date1 = config.getProperty("date1");
-		System.out.println("Getting date1 : " + date1);
+		System.out.println("--Getting date1 : " + date1);
 		String date2 = config.getProperty("date2");
-		System.out.println("Getting date2 : " +date2);
-		System.out.println("Source & config file are read");
+		System.out.println("--Getting date2 : " +date2);
+		System.out.println("--Source & config file are read");
 		List<WeatherInfo> weathersList = HtmlParser.parseHtmlToWeatherInfo(url,
 				date1, date2);
 		
@@ -49,13 +49,20 @@ public class MonthlyAverage {
 		String path = "weather.csv";
 
 		JavaPairRDD<String, List<Double>> weatherPair = readCsv(ctx, path);
-
+		weatherPair.saveAsTextFile("ResultVNGRS/RawData");
+		System.out.println("--Raw Data is obtained");
+		
 		Map<String, Object> keyCount = weatherPair.countByKey();
 
 		JavaPairRDD<String, List<Double>> sumWeather = sumList(weatherPair);
+		sumWeather.saveAsTextFile("ResultVNGRS/sumWeather");
+		System.out.println("--The Sum of Max & Min & Mean are obtained");
+		
 		JavaPairRDD<String, List<Double>> averageWeatherWeather = averageList(
 				sumWeather, keyCount);
-
+		averageWeatherWeather.saveAsTextFile("ResultVNGRS/averageWeather");
+		System.out.println("--The Average of Max & Min & Mean are obtained");
+		
 		PrintWriter writer2 = new PrintWriter("train_results/result.txt",
 				"UTF-8");
 		for (Tuple2<?, ?> tuple : averageWeatherWeather.collect()) {
@@ -63,7 +70,8 @@ public class MonthlyAverage {
 					+ tuple._2());
 			writer2.println(tuple._1() + ":" + tuple._2());
 		}
-
+		
+		System.out.println("--The Train Results are writed");
 		writer2.close();
 	}
 
@@ -94,7 +102,7 @@ public class MonthlyAverage {
 					}
 				});
 
-		//weatherLogs.saveAsTextFile("ResultVNGRS/RawData");
+		
 		return weatherLogs;
 
 	}
@@ -121,7 +129,7 @@ public class MonthlyAverage {
 					}
 				});
 
-		//sumWeather.saveAsTextFile("ResultVNGRS/sumWeather");
+		
 		return sumWeather;
 	}
 
@@ -158,7 +166,7 @@ public class MonthlyAverage {
 					}
 				});
 
-		//averageWeather.saveAsTextFile("ResultVNGRS/averageWeather");
+		
 		return averageWeather;
 
 	}
