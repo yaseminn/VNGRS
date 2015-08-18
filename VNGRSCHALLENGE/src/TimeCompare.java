@@ -15,6 +15,7 @@ public class TimeCompare {
 	}
 
 	public boolean isDateInInterval() {
-		return ((d1.compareTo(d3) <= 0) && (d2.compareTo(d3) >= 0));
+		return (d1.compareTo(d3) * d3.compareTo(d2) >= 0);
+		
 	}
 }
