@@ -150,8 +150,6 @@ public class MonthlyAverage {
 						List<Double> result = new ArrayList<Double>();
 
 						for (Entry<String, Object> entry : keyCount.entrySet()) {
-							System.out.println(entry.getKey() + ":"
-									+ entry.getValue());
 							if (entry.getKey().equalsIgnoreCase(arg0._1())) {
 								for (Double d : arg0._2()) {
 									result.add(Math.floor((d / Integer

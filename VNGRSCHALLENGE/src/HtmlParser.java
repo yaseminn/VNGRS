@@ -44,8 +44,6 @@ public class HtmlParser {
 		List<WeatherInfo> weathersList = new ArrayList<>();
 
 		for (String url : urlList) {
-			System.out.println("--------- " + url);
-			
 			weathersList.add(new WeatherInfo(dateMatcher(url),
 					getAttributes(getUrlsContent(url), "min"), getAttributes(
 							getUrlsContent(url), "max"), getAttributes(
@@ -139,13 +137,8 @@ public class HtmlParser {
 	}
 
 	public static String getAttributes(String htmlContent, String searchText) {
-		String result  = htmlContent.split("<b>" + searchText + "</b>")[1]
+		return  htmlContent.split("<b>" + searchText + "</b>")[1]
 				.split("<span>")[1].replaceAll("\\D+", "");
-		
-		System.out.println(htmlContent +" - " +searchText +":" +result  );
-		
-		return result;
-
 	}
 
 }

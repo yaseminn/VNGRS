@@ -67,7 +67,7 @@ public class HtmlParserTest {
 
 	
 	public String readFile() throws IOException{
-		FileInputStream inputStream = new FileInputStream("foo.txt");
+		FileInputStream inputStream = new FileInputStream("testHtml.txt");
 		String content = null;
 		try {
 		    content = IOUtils.toString(inputStream);
