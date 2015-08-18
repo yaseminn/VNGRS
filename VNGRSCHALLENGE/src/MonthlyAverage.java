@@ -33,12 +33,12 @@ public class MonthlyAverage {
 		
 		// html section
 		String url = config.getProperty("url");
-		System.out.println(url);
+		System.out.println("Getting url : "+url);
 		String date1 = config.getProperty("date1");
-		System.out.println(date1);
+		System.out.println("Getting date1 : " + date1);
 		String date2 = config.getProperty("date2");
-		System.out.println(date2);
-		System.out.println("Veri kaynağı ve parametreler configurasyon dosyasından okundu.");
+		System.out.println("Getting date2 : " +date2);
+		System.out.println("Source & config file are read");
 		List<WeatherInfo> weathersList = HtmlParser.parseHtmlToWeatherInfo(url,
 				date1, date2);
 		
@@ -94,7 +94,7 @@ public class MonthlyAverage {
 					}
 				});
 
-		weatherLogs.saveAsTextFile("ResultVNGRS/RawData");
+		//weatherLogs.saveAsTextFile("ResultVNGRS/RawData");
 		return weatherLogs;
 
 	}
@@ -121,7 +121,7 @@ public class MonthlyAverage {
 					}
 				});
 
-		sumWeather.saveAsTextFile("ResultVNGRS/sumWeather");
+		//sumWeather.saveAsTextFile("ResultVNGRS/sumWeather");
 		return sumWeather;
 	}
 
@@ -158,7 +158,7 @@ public class MonthlyAverage {
 					}
 				});
 
-		averageWeather.saveAsTextFile("ResultVNGRS/averageWeather");
+		//averageWeather.saveAsTextFile("ResultVNGRS/averageWeather");
 		return averageWeather;
 
 	}

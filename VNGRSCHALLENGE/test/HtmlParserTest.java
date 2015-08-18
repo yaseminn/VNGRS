@@ -59,7 +59,6 @@ public class HtmlParserTest {
 		Assert.assertEquals("<a href=\"http://www.convertale.com/challenge/intern/weather/2012-12-16.html\">2012-12-16.html</a>",urlList.get(15).replaceAll("\t", ""));
 	}
 	
-	
 	@Test
 	public void parseHtmlToWeatherInfoTest() throws IOException, ParseException{
 		List<WeatherInfo> weathersList = HtmlParser.parseHtmlToWeatherInfo(URL, "2014-05", "2014-06");
