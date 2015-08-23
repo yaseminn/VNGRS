@@ -23,13 +23,13 @@ public class HtmlParser {
 		List<String> urls = getUrls(urlPath);
 		System.out.println("--UrlLists is taken");
 		TimeCompare timeComparer;
-		String value ;
+		String urlString ;
 		String resultDate;
 		
 		Iterator<String> iter = urls.iterator();
 		while (iter.hasNext()) {
-			value = iter.next();
-			resultDate = dateMatcher(value);
+			urlString = iter.next();
+			resultDate = dateMatcher(urlString);
 			timeComparer = new TimeCompare(resultDate, date1, date2);
 
 			if (!(timeComparer.isDateInInterval())) {
